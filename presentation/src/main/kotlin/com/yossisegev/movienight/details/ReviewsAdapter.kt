@@ -1,9 +1,9 @@
 package com.yossisegev.movienight.details
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.yossisegev.domain.entities.Review
 import com.yossisegev.movienight.R
 import kotlinx.android.synthetic.main.cell_reviews_adapter.view.*
@@ -13,13 +13,13 @@ import kotlinx.android.synthetic.main.cell_reviews_adapter.view.*
  */
 class ReviewsAdapter(private val reviews: List<Review>) : RecyclerView.Adapter<ReviewsAdapter.ReviewViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ReviewViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.cell_reviews_adapter, parent, false)
         return ReviewViewHolder(view)
     }
 
 
-    override fun onBindViewHolder(holder: ReviewViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
         holder?.bind(reviews[position])
     }
 

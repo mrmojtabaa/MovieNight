@@ -1,10 +1,10 @@
 package com.yossisegev.movienight.popularmovies
 
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.yossisegev.movienight.R
 import com.yossisegev.movienight.common.ImageLoader
 import com.yossisegev.movienight.entities.Movie
@@ -19,8 +19,8 @@ class PopularMoviesAdapter constructor(private val imageLoader: ImageLoader,
     private val movies: MutableList<Movie> = mutableListOf()
 
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MovieCellViewHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieCellViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(
                 R.layout.popular_movies_adapter_cell,
                 parent,
                 false)
@@ -31,9 +31,8 @@ class PopularMoviesAdapter constructor(private val imageLoader: ImageLoader,
         return movies.size
     }
 
-    override fun onBindViewHolder(holder: MovieCellViewHolder?, position: Int) {
-        val movie = movies[position]
-        holder?.bind(movie, imageLoader, onMovieSelected)
+    override fun onBindViewHolder(holder: MovieCellViewHolder, position: Int) {
+        holder.bind(position, imageLoader)
     }
 
     fun addMovies(movies: List<Movie>) {
@@ -41,11 +40,17 @@ class PopularMoviesAdapter constructor(private val imageLoader: ImageLoader,
         notifyDataSetChanged()
     }
 
-    class MovieCellViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(movie: Movie, imageLoader: ImageLoader, listener: (Movie, View) -> Unit) = with(itemView) {
-            title.text = movie.originalTitle
-            movie.posterPath?.let { imageLoader.load(it, image) }
-            setOnClickListener { listener(movie, itemView) }
+    fun getMovie(position: Int) = movies[position]
+
+    inner class MovieCellViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener { onMovieSelected(getMovie(adapterPosition), itemView) }
+        }
+
+        fun bind(position: Int, imageLoader: ImageLoader) = with(itemView) {
+            title.text = getMovie(position).originalTitle
+            getMovie(position).posterPath?.let { imageLoader.load(it, image) }
+            //setOnClickListener { listener(movie, itemView) }
         }
 
     }

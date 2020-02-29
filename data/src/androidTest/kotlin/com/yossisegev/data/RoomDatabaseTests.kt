@@ -1,6 +1,6 @@
 package com.yossisegev.data
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import com.yossisegev.data.db.MoviesDao

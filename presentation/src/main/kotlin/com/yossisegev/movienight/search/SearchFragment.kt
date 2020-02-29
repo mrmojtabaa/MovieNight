@@ -1,12 +1,9 @@
 package com.yossisegev.movienight.search
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -18,6 +15,9 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.yossisegev.movienight.R
 import com.yossisegev.movienight.common.App
 import com.yossisegev.movienight.common.BaseFragment
@@ -63,7 +63,7 @@ class SearchFragment : BaseFragment(), TextWatcher {
         super.onCreate(savedInstanceState)
 
         (activity?.application as App).createSearchComponent().inject(this)
-        viewModel = ViewModelProviders.of(this, factory).get(SearchViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(SearchViewModel::class.java)
         searchSubject = PublishSubject.create()
 
         //TODO: Handle screen rotation during debounce
@@ -82,10 +82,10 @@ class SearchFragment : BaseFragment(), TextWatcher {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.viewState.observe(this, Observer {
+        viewModel.viewState.observe(viewLifecycleOwner, Observer {
             if (it != null) handleViewState(it)
         })
-        viewModel.errorState.observe(this, Observer { throwable ->
+        viewModel.errorState.observe(viewLifecycleOwner, Observer { throwable ->
             throwable?.let {
                 Toast.makeText(activity, throwable.message, Toast.LENGTH_LONG).show()
             }
@@ -116,10 +116,10 @@ class SearchFragment : BaseFragment(), TextWatcher {
         searchEditText.addTextChangedListener(this)
         progressBar = search_movies_progress
         noResultsMessage = search_movies_no_results_message
-        searchResultsAdapter = SearchResultsAdapter(imageLoader, { movie, movieView ->
+        searchResultsAdapter = SearchResultsAdapter(imageLoader) { movie, movieView ->
             showSoftKeyboard(false)
             navigateToMovieDetailsScreen(movie, movieView)
-        })
+        }
         recyclerView = search_movies_recyclerview
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = searchResultsAdapter

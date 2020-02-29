@@ -1,23 +1,20 @@
 package com.yossisegev.movienight.popularmovies
 
-import android.app.ActivityOptions
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.yossisegev.movienight.R
 import com.yossisegev.movienight.common.App
 import com.yossisegev.movienight.common.BaseFragment
 import com.yossisegev.movienight.common.ImageLoader
-import com.yossisegev.movienight.details.MovieDetailsActivity
-import com.yossisegev.movienight.entities.Movie
 import kotlinx.android.synthetic.main.fragment_popular_movies.*
 import javax.inject.Inject
 
@@ -38,7 +35,7 @@ class PopularMoviesFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity?.application as App).createPopularComponenet().inject(this)
-        viewModel = ViewModelProviders.of(this, factory).get(PopularMoviesViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(PopularMoviesViewModel::class.java)
 
         if (savedInstanceState == null) {
             viewModel.getPopularMovies()
@@ -47,10 +44,10 @@ class PopularMoviesFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.viewState.observe(this, Observer {
+        viewModel.viewState.observe(viewLifecycleOwner, Observer {
             if (it != null) handleViewState(it)
         })
-        viewModel.errorState.observe(this, Observer { throwable ->
+        viewModel.errorState.observe(viewLifecycleOwner, Observer { throwable ->
             throwable?.let {
                 Toast.makeText(activity, throwable.message, Toast.LENGTH_LONG).show()
             }

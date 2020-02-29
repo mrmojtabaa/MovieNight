@@ -1,9 +1,9 @@
 package com.yossisegev.movienight.details
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.yossisegev.movienight.R
 import com.yossisegev.movienight.entities.Video
 import kotlinx.android.synthetic.main.videos_adapter_row.view.*
@@ -13,12 +13,12 @@ import kotlinx.android.synthetic.main.videos_adapter_row.view.*
  */
 class VideosAdapter(private val videos: List<Video>, private val callback: (Video) -> (Unit)) : RecyclerView.Adapter<VideosAdapter.VideoViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): VideoViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.videos_adapter_row, parent, false)
         return VideoViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: VideoViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
         holder?.bind(videos[position], callback)
     }
 

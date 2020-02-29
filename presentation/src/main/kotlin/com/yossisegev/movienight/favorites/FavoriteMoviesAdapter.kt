@@ -1,10 +1,10 @@
 package com.yossisegev.movienight.favorites
 
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.yossisegev.movienight.R
 import com.yossisegev.movienight.common.ImageLoader
 import com.yossisegev.movienight.entities.Movie
@@ -19,7 +19,7 @@ class FavoriteMoviesAdapter constructor(private val imageLoader: ImageLoader,
 
     private var movies: List<Movie> = listOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MovieCellViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieCellViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(
                 R.layout.favorite_movies_adapter_row,
                 parent,
@@ -31,9 +31,9 @@ class FavoriteMoviesAdapter constructor(private val imageLoader: ImageLoader,
         return movies.size
     }
 
-    override fun onBindViewHolder(holder: MovieCellViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: MovieCellViewHolder, position: Int) {
         val movie = movies[position]
-        holder?.bind(movie, imageLoader, onMovieSelected)
+        holder.bind(movie, imageLoader, onMovieSelected)
     }
 
     fun setMovies(movies: List<Movie>) {

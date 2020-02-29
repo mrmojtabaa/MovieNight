@@ -1,23 +1,24 @@
 package com.yossisegev.movienight.details
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.transition.Slide
 import android.transition.TransitionManager
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import co.lujun.androidtagview.TagContainerLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.yossisegev.movienight.R
 import com.yossisegev.movienight.common.App
 import com.yossisegev.movienight.common.ImageLoader
@@ -69,7 +70,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         (application as App).createDetailsComponent().inject(this)
 
         factory.movieId = intent.getIntExtra(MOVIE_ID, 0)
-        detailsViewModel = ViewModelProviders.of(this, factory).get(MovieDetailsViewModel::class.java)
+        detailsViewModel = ViewModelProvider(this, factory).get(MovieDetailsViewModel::class.java)
         backButton = details_back_button
         backButton.setOnClickListener { finish() }
         favoriteButton = details_favorite_fab

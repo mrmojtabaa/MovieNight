@@ -1,6 +1,6 @@
 package com.yossisegev.movienight.di.modules
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.content.Context
 import com.yossisegev.data.api.Api
 import com.yossisegev.data.db.MoviesDatabase

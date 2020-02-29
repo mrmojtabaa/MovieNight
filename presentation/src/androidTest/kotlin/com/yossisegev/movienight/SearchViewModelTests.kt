@@ -1,6 +1,6 @@
 package com.yossisegev.movienight
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.support.test.annotation.UiThreadTest
 import android.support.test.runner.AndroidJUnit4
 import com.yossisegev.domain.MoviesRepository

@@ -1,6 +1,6 @@
 package com.yossisegev.movienight
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.util.Log
 
 /**
